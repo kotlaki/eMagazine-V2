@@ -2,6 +2,7 @@ package com.kurganov.webserver.controllers;
 
 import com.kurganov.serverdb.entities.Product;
 import com.kurganov.webserver.services.ProductsServiceImpl;
+import com.kurganov.webserver.utils.SenderApp;
 import com.kurganov.webserver.utils.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ShoppingCartController {
     private ShoppingCart shoppingCart;
     private ProductsServiceImpl productsService;
+    private SenderApp senderApp;
 
     @Autowired
     public void setShoppingCartService(ShoppingCart shoppingCart) {
@@ -29,6 +31,11 @@ public class ShoppingCartController {
         this.productsService = productsService;
     }
 
+    @Autowired
+    public void setSenderApp(SenderApp senderApp) {
+        this.senderApp = senderApp;
+    }
+
     @GetMapping
     public String cartPage(Model model) {
         model.addAttribute("cart", shoppingCart);
@@ -36,8 +43,9 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/add/{id}")
-    public String addProductToCart(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
+    public String addProductToCart(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) throws Exception {
         shoppingCart.add(id);
+        senderApp.senderApp();
         String referrer = httpServletRequest.getHeader("referer");
         return "redirect:" + referrer;
     }
