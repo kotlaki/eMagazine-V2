@@ -38,10 +38,14 @@ public class SpringTestAuth {
     // как вытащить информацию о ролях пользователя?
     @Test
     public void securityAccessDeniedTest() throws Exception {
-        mockMvc.perform(get("http://localhost:8188/shop/add/0"))
+//        mockMvc.perform(get("http://localhost:8188/shop/add/0"))
+//                .andDo(print())
+//                .andExpect(status().is3xxRedirection())
+//                .andExpect(redirectedUrl("http://localhost:8188/login"));
+        mockMvc.perform(formLogin("http://localhost:8188/shop/add/0").user("admin").password("123"))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("http://localhost:8188/login"));
+                .andExpect(redirectedUrl("http://localhost:8188/shop/add/0"));
     }
 
 }
