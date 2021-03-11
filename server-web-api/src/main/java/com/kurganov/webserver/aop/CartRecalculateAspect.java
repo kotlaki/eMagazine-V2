@@ -22,7 +22,8 @@ public class CartRecalculateAspect {
     private ShoppingCart shoppingCart;
 
     @AfterReturning(
-            pointcut = "execution(public * com.kurganov.webserver.controllers.ShoppingCartController.addProductToCart(..))",
+            pointcut = "execution(public * com.kurganov.webserver.controllers.ShoppingCartController.addProductToCart(..)) " +
+                    "|| execution(public * com.kurganov.webserver.controllers.ShoppingCartController.delete(..))",
             returning = "result")
     public void afterRecalculate(JoinPoint jp, String result) {
         shoppingCart.setTotalCost(recalculate());

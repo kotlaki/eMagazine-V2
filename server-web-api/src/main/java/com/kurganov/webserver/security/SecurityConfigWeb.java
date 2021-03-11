@@ -14,4 +14,6 @@ public class SecurityConfigWeb {
     public BCryptPasswordEncoder passwordEncoderWeb() {
         return new BCryptPasswordEncoder();
     }
+
+
 }
