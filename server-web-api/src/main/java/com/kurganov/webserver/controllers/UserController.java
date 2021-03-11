@@ -78,7 +78,7 @@ public class UserController {
         }
         userServiceImpl.saveUser(user);
         String referrer = httpServletRequest.getHeader("referer");
-        return "redirect:" + referrer;
+        return "redirect:/users";
     }
 
     @GetMapping("/delete/{id}")
