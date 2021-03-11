@@ -2,6 +2,7 @@ package com.kurganov.webserver.controllers;
 
 import com.kurganov.serverdb.entities.User;
 import com.kurganov.webserver.config.FilterApp;
+import com.kurganov.webserver.controllers.dto.SystemUserDTO;
 import com.kurganov.webserver.security.AuthUser;
 import com.kurganov.webserver.services.RoleServiceImpl;
 import com.kurganov.webserver.services.UserServiceImpl;
@@ -43,6 +44,7 @@ public class UserController {
         this.filterApp = filterApp;
     }
 
+    // вывод списка пользователей
     @GetMapping
     public String showUsers(Model model, @RequestParam(value = "page") Optional<Integer> page,
                             @RequestParam(value = "word", required = false) Optional<String> word) {
@@ -58,6 +60,16 @@ public class UserController {
         return "users-list";
     }
 
+    // регистрация нового пользователя из под админки
+    @GetMapping("/showRegistrationForm")
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("newUser", new User());
+        model.addAttribute("roles", roleServiceImpl.findAll());
+        model.addAttribute("fio", authUser.getCurrentFio());
+        return "registration-form-user-for-admin";
+    }
+
+    // редактирование пользователя
     @GetMapping("/edit/{id}")
     public String editUser(@PathVariable("id") Long id, Model model) throws Exception {
         User user = userServiceImpl.findById(id).orElseThrow(Exception::new);
@@ -70,6 +82,7 @@ public class UserController {
         return "edit-user";
     }
 
+    // сохранение ользователя в БД с редиректом на список пользователей
     @PostMapping("/update")
     public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult,
                              HttpServletRequest httpServletRequest) {
@@ -80,6 +93,7 @@ public class UserController {
         return "redirect:/users";
     }
 
+    // уаление пользователей
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
         userServiceImpl.deleteById(id);

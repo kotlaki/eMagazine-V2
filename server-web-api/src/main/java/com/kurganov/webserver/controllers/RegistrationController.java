@@ -37,7 +37,7 @@ public class RegistrationController {
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    @GetMapping("/showRegistrationForm")
+    @GetMapping
     public String showMyLoginPage(Model model) {
         model.addAttribute("systemUser", new SystemUserDTO());
         model.addAttribute("fio", authUser.getCurrentFio());
@@ -55,7 +55,6 @@ public class RegistrationController {
         }
         User existing = userService.findByUserName(userName);
         if (existing != null) {
-            // theSystemUser.setUserName(null);
             model.addAttribute("systemUser", theSystemUserDTO);
             model.addAttribute("registrationError", "User with current username already exists");
             model.addAttribute("fio", authUser.getCurrentFio());
