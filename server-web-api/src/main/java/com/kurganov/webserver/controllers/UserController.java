@@ -77,7 +77,6 @@ public class UserController {
             return "edit-user";
         }
         userServiceImpl.saveUser(user);
-        String referrer = httpServletRequest.getHeader("referer");
         return "redirect:/users";
     }
 

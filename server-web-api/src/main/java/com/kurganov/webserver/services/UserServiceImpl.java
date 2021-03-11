@@ -80,6 +80,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean saveUser(User user) {
+        user.setPassword(passwordEncoderWeb.encode(user.getPassword()));
         userRepository.save(user);
         return true;
     }
