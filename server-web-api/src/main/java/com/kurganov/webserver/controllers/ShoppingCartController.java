@@ -1,6 +1,7 @@
 package com.kurganov.webserver.controllers;
 
 import com.kurganov.serverdb.entities.Product;
+import com.kurganov.webserver.security.AuthUser;
 import com.kurganov.webserver.services.ProductsServiceImpl;
 import com.kurganov.webserver.utils.SenderApp;
 import com.kurganov.webserver.utils.ShoppingCart;
@@ -22,6 +23,9 @@ public class ShoppingCartController {
     private SenderApp senderApp;
 
     @Autowired
+    private AuthUser authUser;
+
+    @Autowired
     public void setShoppingCartService(ShoppingCart shoppingCart) {
         this.shoppingCart = shoppingCart;
     }
@@ -39,6 +43,7 @@ public class ShoppingCartController {
     @GetMapping
     public String cartPage(Model model) {
         model.addAttribute("cart", shoppingCart);
+        model.addAttribute("fio", authUser.getCurrentFio());
         return "cart-page";
     }
 

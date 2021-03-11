@@ -4,13 +4,15 @@ VALUES
 
 INSERT INTO users (username,password,first_name,last_name,email,phone)
 VALUES
-('admin','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','Admin','Admin','admin@gmail.com','+79881111111');
+('guest','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','Guest','Guest','guest@gmail.com','+79881111111'),
+('admin','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','Petrov','Petr','admin@gmail.com','+79881111112');
 
 INSERT INTO users_roles (user_id, role_id)
 VALUES
 (1, 1),
-(1, 2),
-(1, 3);
+(2, 1),
+(2, 2),
+(2, 3);
 
 INSERT INTO categories (title)
 VALUES

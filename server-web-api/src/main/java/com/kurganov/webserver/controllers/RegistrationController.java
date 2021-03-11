@@ -3,6 +3,7 @@ package com.kurganov.webserver.controllers;
 import com.kurganov.serverdb.entities.User;
 import com.kurganov.webserver.controllers.dto.SystemUserDTO;
 import com.kurganov.webserver.interfaces.UserService;
+import com.kurganov.webserver.security.AuthUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class RegistrationController {
     private UserService userService;
 
     @Autowired
+    private AuthUser authUser;
+
+    @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
@@ -34,15 +38,16 @@ public class RegistrationController {
     }
 
     @GetMapping("/showRegistrationForm")
-    public String showMyLoginPage(Model theModel) {
-        theModel.addAttribute("systemUser", new SystemUserDTO());
+    public String showMyLoginPage(Model model) {
+        model.addAttribute("systemUser", new SystemUserDTO());
+        model.addAttribute("fio", authUser.getCurrentFio());
         return "registration-form";
     }
 
     // Binding Result после @ValidModel !!!
     @PostMapping("/processRegistrationForm")
     public String processRegistrationForm(@Valid @ModelAttribute("systemUser") SystemUserDTO theSystemUserDTO,
-                                          BindingResult theBindingResult, Model theModel) {
+                                          BindingResult theBindingResult, Model model) {
         String userName = theSystemUserDTO.getUserName();
         logger.debug("Processing registration form for: " + userName);
         if (theBindingResult.hasErrors()) {
@@ -51,8 +56,9 @@ public class RegistrationController {
         User existing = userService.findByUserName(userName);
         if (existing != null) {
             // theSystemUser.setUserName(null);
-            theModel.addAttribute("systemUser", theSystemUserDTO);
-            theModel.addAttribute("registrationError", "User with current username already exists");
+            model.addAttribute("systemUser", theSystemUserDTO);
+            model.addAttribute("registrationError", "User with current username already exists");
+            model.addAttribute("fio", authUser.getCurrentFio());
             logger.debug("User name already exists.");
             return "registration-form";
         }

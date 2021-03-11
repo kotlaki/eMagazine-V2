@@ -3,6 +3,7 @@ package com.kurganov.webserver.controllers;
 import com.kurganov.serverdb.entities.Order;
 import com.kurganov.serverdb.entities.User;
 import com.kurganov.webserver.interfaces.UserService;
+import com.kurganov.webserver.security.AuthUser;
 import com.kurganov.webserver.services.DeliveryAddressServiceImpl;
 import com.kurganov.webserver.services.OrderServiceImpl;
 import com.kurganov.webserver.utils.ReceiverApp;
@@ -25,6 +26,9 @@ public class OrderController {
     private DeliveryAddressServiceImpl deliverAddressService;
     private ShoppingCart shoppingCart;
     private ReceiverApp receiverApp;
+
+    @Autowired
+    private AuthUser authUser;
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -59,6 +63,7 @@ public class OrderController {
         User user = userService.findByUserName(principal.getName());
         model.addAttribute("cart", shoppingCart);
         model.addAttribute("deliveryAddresses", deliverAddressService.getUserAddresses(user.getId()));
+        model.addAttribute("fio", authUser.getCurrentFio());
         return "order-filler";
     }
 
@@ -76,6 +81,7 @@ public class OrderController {
         order.setDeliveryPrice(0.0);
         order = orderServiceImpl.saveOrder(order);
         model.addAttribute("order", order);
+        model.addAttribute("fio", authUser.getCurrentFio());
         receiverApp.receiverApp();
         return "order-before-purchase";
     }
@@ -92,6 +98,7 @@ public class OrderController {
             return "redirect:/";
         }
         model.addAttribute("order", confirmedOrder);
+        model.addAttribute("fio", authUser.getCurrentFio());
         return "order-result";
     }
 }

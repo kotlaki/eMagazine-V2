@@ -15,7 +15,7 @@
 
 <body>
 
-<div class="fluid-container" th:fragment="navi(activeTab)">
+<div class="fluid-container" th:fragment="navi(activeTab, fio)">
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary ">
         <a class="navbar-brand" th:href="@{/}">Project</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -59,8 +59,12 @@
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item">
                     <form th:action="@{/logout}" method="POST">
-                        <input type="submit" class="btn btn-danger" value="Logout"/>
+                        <input type="submit" class="btn btn-danger" th:value="${#authentication.name} + ' Logout'"/>
                     </form>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item"
+                    th:classappend="${activeTab == 'Users' ? 'active' : ''}">
+                    <a class="nav-link ml-5" th:text="${fio}" style="color: lightsalmon"/>
                 </li>
             </ul>
         </div>

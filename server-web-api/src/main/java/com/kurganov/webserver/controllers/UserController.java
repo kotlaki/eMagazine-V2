@@ -2,6 +2,7 @@ package com.kurganov.webserver.controllers;
 
 import com.kurganov.serverdb.entities.User;
 import com.kurganov.webserver.config.FilterApp;
+import com.kurganov.webserver.security.AuthUser;
 import com.kurganov.webserver.services.RoleServiceImpl;
 import com.kurganov.webserver.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class UserController {
     private FilterApp filterApp;
 
     @Autowired
+    private AuthUser authUser;
+
+    @Autowired
     public void setUsersService(UserServiceImpl userServiceImpl, RoleServiceImpl roleServiceImpl) {
         this.userServiceImpl = userServiceImpl;
         this.roleServiceImpl = roleServiceImpl;
@@ -49,6 +53,7 @@ public class UserController {
         model.addAttribute("totalPage", users.getTotalPages());
         model.addAttribute("page", currentPage);
         model.addAttribute("users", users.getContent());
+        model.addAttribute("fio", authUser.getCurrentFio());
         word.ifPresent(s -> model.addAttribute("word", s));
         return "users-list";
     }
@@ -61,6 +66,7 @@ public class UserController {
         }
         model.addAttribute("userTest", user);
         model.addAttribute("roles", roleServiceImpl.findAll());
+        model.addAttribute("fio", authUser.getCurrentFio());
         return "edit-user";
     }
 

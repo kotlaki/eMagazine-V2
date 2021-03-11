@@ -3,14 +3,19 @@ package com.kurganov.webserver.controllers;
 import com.kurganov.serverdb.entities.Greeting;
 import com.kurganov.serverdb.entities.Product;
 import com.kurganov.serverdb.entities.ProductImage;
+import com.kurganov.serverdb.entities.User;
 import com.kurganov.webserver.config.FilterApp;
 import com.kurganov.webserver.interfaces.IShopControllerWs;
+import com.kurganov.webserver.security.AuthUser;
 import com.kurganov.webserver.services.CategoryServiceImpl;
 import com.kurganov.webserver.services.ImageServiceImpl;
 import com.kurganov.webserver.services.ProductsServiceImpl;
+import com.kurganov.webserver.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,7 +37,20 @@ public class ShopController {
     private CategoryServiceImpl categoryServiceImpl;
     private ImageServiceImpl imageServiceImpl;
 
+    private UserServiceImpl userService;
+    private AuthUser authUser;
+
     private IShopControllerWs shopControllerWs;
+
+    @Autowired
+    public void setAuthUser(AuthUser authUser) {
+        this.authUser = authUser;
+    }
+
+    @Autowired
+    public void setUserService(UserServiceImpl userService) {
+        this.userService = userService;
+    }
 
     @Autowired
     public void setShopControllerWs(IShopControllerWs shopControllerWs) {
@@ -80,6 +98,7 @@ public class ShopController {
         model.addAttribute("min", min);
         model.addAttribute("max", max);
         word.ifPresent(s -> model.addAttribute("word", s));
+        model.addAttribute("fio", authUser.getCurrentFio());
         return "shop-page";
     }
 
@@ -87,6 +106,7 @@ public class ShopController {
     public String productPage(Model model, @PathVariable(value = "id") Long id) {
         Product product = productsServiceImpl.findById(id);
         model.addAttribute("product", product);
+        model.addAttribute("fio", authUser.getCurrentFio());
         return "product-page";
     }
 
@@ -99,6 +119,7 @@ public class ShopController {
         }
         model.addAttribute("categories", categoryServiceImpl.getAllCategories());
         model.addAttribute("product", product);
+        model.addAttribute("fio", authUser.getCurrentFio());
         return "edit-product";
     }
 
@@ -114,6 +135,7 @@ public class ShopController {
         if (existing != null && (product.getId() == null || !product.getId().equals(existing.getId()))) {
             model.addAttribute("product", product);
             model.addAttribute("productCreationError", "Product title already exists");
+            model.addAttribute("fio", authUser.getCurrentFio());
             return "edit-product";
         }
         productsServiceImpl.saveOrUpdate(product);
@@ -151,6 +173,7 @@ public class ShopController {
 
         model.addAttribute("categories", categoryServiceImpl.getAllCategories());
         model.addAttribute("product", product);
+        model.addAttribute("fio", authUser.getCurrentFio());
         return "edit-product";
     }
 
@@ -161,10 +184,11 @@ public class ShopController {
                          @RequestParam("file") MultipartFile file) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("categories", categoryServiceImpl.getAllCategories());
+            model.addAttribute("fio", authUser.getCurrentFio());
             return "edit-product";
         }
 //        Product product = productsService.findById(id);
-        if(!file.isEmpty()) {
+        if (!file.isEmpty()) {
             String path = imageServiceImpl.saveFile(file);
             ProductImage productImage = new ProductImage();
             productImage.setPath(path);
