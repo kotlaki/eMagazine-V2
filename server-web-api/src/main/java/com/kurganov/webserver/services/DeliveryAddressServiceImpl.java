@@ -24,4 +24,10 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
     public DeliveryAddress getUserAddressById(Long id) {
         return deliveryAddressRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public void save(DeliveryAddress deliveryAddress) {
+        deliveryAddressRepository.save(deliveryAddress);
+    }
+
 }

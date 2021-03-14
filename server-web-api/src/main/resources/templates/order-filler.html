@@ -3,6 +3,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+    <style>
+        .addAddr {
+            color: lightskyblue;
+        }
+    </style>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <title>Оформление заказа</title>
@@ -48,7 +53,18 @@
         <span>Укажите адрес доставки</span>
         <select class="form-control" name="deliveryAddress" id="dropDeliveryAddresses">
             <option th:each="o : ${deliveryAddresses}" th:value="${o.id}" th:text="${o.address}"></option>
+<!--            <option value="addAddress" href="html://ya.ru">Добавить новый адрес...</option>-->
+<!--                <div th:if="(${o.address} eq ${addNewAdr})">-->
+<!--                    <a th:href="@{www.ya.ru}" th:value="${o.id}" th:text="${o.address}"></a>-->
+<!--                </div>-->
+<!--            <p th:each="o : ${deliveryAddresses}" class="test123">-->
+<!--                <span th:text="${o}"></span>-->
+<!--                <a th:href="@{www.yandex.ru/${rel}(rel=${o})}" th:text=" '[link]'"></a>-->
+<!--            </p>-->
         </select>
+
+        <a class="addAddr" th:href="@{/newAddr}">Нажмите для ввода нового адреса доставки</a>
+
         <br>
         <span>Укажите номер телефона</span>
         <input type="text" name="phoneNumber" class="form-control input-sm">

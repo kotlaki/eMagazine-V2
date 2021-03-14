@@ -19,4 +19,37 @@ public class DeliveryAddress {
 
     @Column(name = "address")
     private String address;
+
+    public DeliveryAddress() {
+    }
+
+    public DeliveryAddress(Long id, User user, String address) {
+        this.id = id;
+        this.user = user;
+        this.address = address;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }

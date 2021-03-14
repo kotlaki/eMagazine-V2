@@ -1,5 +1,6 @@
 package com.kurganov.webserver.controllers;
 
+import com.kurganov.serverdb.entities.DeliveryAddress;
 import com.kurganov.serverdb.entities.Order;
 import com.kurganov.serverdb.entities.User;
 import com.kurganov.webserver.interfaces.UserService;
@@ -11,13 +12,13 @@ import com.kurganov.webserver.utils.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 public class OrderController {
@@ -62,7 +63,8 @@ public class OrderController {
         }
         User user = userService.findByUserName(principal.getName());
         model.addAttribute("cart", shoppingCart);
-        model.addAttribute("deliveryAddresses", deliverAddressService.getUserAddresses(user.getId()));
+        List<DeliveryAddress> addressList = deliverAddressService.getUserAddresses(user.getId());
+        model.addAttribute("deliveryAddresses", addressList);
         model.addAttribute("fio", authUser.getCurrentFio());
         return "order-filler";
     }
@@ -84,6 +86,18 @@ public class OrderController {
         model.addAttribute("fio", authUser.getCurrentFio());
         receiverApp.receiverApp();
         return "order-before-purchase";
+    }
+
+    @GetMapping("/newAddr")
+    public String newAddress() {
+        return "new-address";
+    }
+
+    @PostMapping("/saveAddr")
+    public String saveNewAddr(@Valid @ModelAttribute("new-addr") String newAddr, Principal principal) {
+        User user = userService.findByUserName(principal.getName());
+        deliverAddressService.save(new DeliveryAddress(null, user, newAddr));
+        return "redirect:/order/fill";
     }
 
     @GetMapping("/order/result/{id}")

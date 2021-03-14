@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Добавить новый адрес</title>
+</head>
+<body>
+
+<form th:action="@{/saveAddr}" method="post">
+    <br>
+    <span>Введите новый адрес</span>
+    <input type="text" name="new-addr" placeholder="Введите адрес" size="50" class="form-control input-sm">
+<!--    <div class="col-sm-6 controls">-->
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+<!--        <button class="btn btn-danger" th:href="@{/order/fill}">Назад</button>-->
+<!--    </div>-->
+</form>
+</body>
+</html>

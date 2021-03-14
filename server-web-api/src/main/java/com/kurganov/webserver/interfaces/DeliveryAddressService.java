@@ -10,4 +10,6 @@ public interface DeliveryAddressService {
 
     DeliveryAddress getUserAddressById(Long id);
 
+    void save(DeliveryAddress deliveryAddress);
+
 }
