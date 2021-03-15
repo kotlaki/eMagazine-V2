@@ -100,6 +100,7 @@ public class OrderController {
         return "redirect:/order/fill";
     }
 
+    // просмотр заказа???
     @GetMapping("/order/result/{id}")
     public String orderConfirm(Model model, @PathVariable(name = "id") Long id, Principal principal) {
         if (principal == null) {

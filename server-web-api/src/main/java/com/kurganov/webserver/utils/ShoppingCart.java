@@ -67,6 +67,11 @@ public class ShoppingCart {
         items.remove(orderItem);
     }
 
+    // удаляем содержимое корзины
+    public void removeAll(List<OrderItem> listOrderItems) {
+        items.removeAll(listOrderItems);
+    }
+
     private OrderItem findOrderFromProduct(Product product) {
         return items.stream().filter(o -> o.getProduct().getId().equals(product.getId())).findFirst().orElse(null);
     }

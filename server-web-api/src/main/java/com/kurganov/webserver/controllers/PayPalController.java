@@ -1,6 +1,7 @@
 package com.kurganov.webserver.controllers;
 
 import com.kurganov.webserver.security.AuthUser;
+import com.kurganov.webserver.utils.ShoppingCart;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
@@ -22,6 +23,9 @@ public class PayPalController {
     private String clientId = "AXJTs_qsXdtx9ycPrNVk6rLPIM0OWhKloXo6qWlIZ5BYdMD1ffGsmEqxrUYkN6A0_3zvQwXYFaXknL1j";
     private String clientSecret = "EHtyfRERiXy8pGBf5137ky3fLiTAsKeH35D-4eC3UNQ-ob0qOnYOQ6GF5g3-r11nMzwO4Jjlbf_s7xxs";
     private String mode = "sandbox";
+
+    @Autowired
+    private ShoppingCart shoppingCart;
 
     @Autowired
     private AuthUser authUser;
@@ -88,6 +92,8 @@ public class PayPalController {
         if (executorPayment.getState().equals("approved")) {
             model.addAttribute("message", "Ваш заказ сформерован");
             model.addAttribute("fio", authUser.getCurrentFio());
+            // удаляем содержимое корзины
+            shoppingCart.removeAll(shoppingCart.getItems());
         } else {
             model.addAttribute("message", "Ошибка при формировании заказа");
             model.addAttribute("fio", authUser.getCurrentFio());
