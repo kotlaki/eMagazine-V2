@@ -53,6 +53,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User findByUserName(String username) {
+        // создали обработку входа анонимного пользователя
         if(username.equals("anonymousUser")) {
             return userRepository.findOneByUserName("guest");
         }
