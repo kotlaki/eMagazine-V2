@@ -1,4 +1,4 @@
-package com.kurganov.serverauthorization.config;
+package com.kurganov.webserver.config;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 import org.springframework.stereotype.Component;

@@ -19,7 +19,7 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
-@Secured("ROLE_ADMIN")
+//@Secured("ROLE_ADMIN")
 @RequestMapping("/users")
 public class UserController {
 

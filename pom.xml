@@ -13,7 +13,6 @@
 
     <modules>
         <module>server-db</module>
-        <module>server-authorization</module>
         <module>server-web-api</module>
     </modules>
 

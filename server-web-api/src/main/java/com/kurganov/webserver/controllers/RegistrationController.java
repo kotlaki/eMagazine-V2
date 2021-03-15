@@ -37,7 +37,7 @@ public class RegistrationController {
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    @GetMapping
+    @GetMapping("/showRegistrationForm")
     public String showMyLoginPage(Model model) {
         model.addAttribute("systemUser", new SystemUserDTO());
         model.addAttribute("fio", authUser.getCurrentFio());

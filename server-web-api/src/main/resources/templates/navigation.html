@@ -64,7 +64,7 @@
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item"
                     th:classappend="${activeTab == 'Users' ? 'active' : ''}">
-                    <a class="nav-link ml-5" th:text="${fio}" style="color: lightsalmon"/>
+                    <a class="nav-link ml-5" th:href="@{/profile}" th:text="${fio}" style="color: lightsalmon"/>
                 </li>
             </ul>
         </div>

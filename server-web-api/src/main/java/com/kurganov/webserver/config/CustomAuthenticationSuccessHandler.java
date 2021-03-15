@@ -1,4 +1,4 @@
-package com.kurganov.serverauthorization.config;
+package com.kurganov.webserver.config;
 
 import com.kurganov.serverdb.entities.User;
 import com.kurganov.webserver.interfaces.UserService;
