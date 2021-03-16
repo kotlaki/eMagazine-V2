@@ -68,6 +68,14 @@ public class OrderController {
     }
 
     @Secured("ROLE_ADMIN")
+    @GetMapping("/order/{id}")
+    public String orderInfo(Model model, @PathVariable(value = "id") Long id) {
+        Order order = orderServiceImpl.findById(id);
+        model.addAttribute("orderModel", order);
+        return "order-result";
+    }
+
+    @Secured("ROLE_ADMIN")
     @GetMapping("/delete/{id}")
     public String deleteOrder(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
         orderServiceImpl.delete(id);
