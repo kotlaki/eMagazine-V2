@@ -67,6 +67,14 @@ public class OrderController {
         return "orders-list";
     }
 
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/delete/{id}")
+    public String deleteOrder(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
+        orderServiceImpl.delete(id);
+        String referrer = httpServletRequest.getHeader("referer");
+        return "redirect:" + referrer;
+    }
+
     @GetMapping("/order/fill")
     public String orderFill(Model model, Principal principal) {
         if (principal == null) {

@@ -67,7 +67,7 @@
                         <!--                        <th scope="row" th:text="${user.getPassword()}"></th>-->
                         <td>
                             <button type="button" class="btn btn-primary">Просмотреть заказ</button>
-                            <button type="button" class="btn btn-danger">Удалить заказ</button>
+                            <a type="button" class="btn btn-danger" th:href="@{'/delete/' + ${orderList.id}}">Удалить заказ</a>
                             <!--                            <button name="edit" type="submit">Редактировать</button>-->
                             <!--                            <button name="delete" type="reset">Удалить</button>-->
                             <!--<a th:href="@{/users/{id}(id = ${user.getId()})}" class="btn btn-icon btn-pill btn-primary" data-toggle="tooltip" title="Редактировать"><i class="fa fa-fw fa-edit"></i></a>-->

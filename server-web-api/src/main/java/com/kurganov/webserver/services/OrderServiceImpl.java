@@ -58,4 +58,9 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> getOrderByUserId(Long userId) {
         return orderRepository.getOrdersByUserId(userId);
     }
+
+    @Override
+    public void delete(Long id) {
+        orderRepository.deleteById(id);
+    }
 }
