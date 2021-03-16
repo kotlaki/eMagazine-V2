@@ -3,6 +3,7 @@ package com.kurganov.webserver.controllers;
 import com.kurganov.serverdb.entities.Order;
 import com.kurganov.webserver.security.AuthUser;
 import com.kurganov.webserver.services.MailServiceImpl;
+import com.kurganov.webserver.services.OrderServiceImpl;
 import com.kurganov.webserver.utils.ShoppingCart;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
@@ -34,6 +35,9 @@ public class PayPalController {
 
     @Autowired
     private MailServiceImpl mailService;
+
+    @Autowired
+    private OrderServiceImpl orderService;
 
     private APIContext apiContext = new APIContext(clientId, clientSecret, mode);
 

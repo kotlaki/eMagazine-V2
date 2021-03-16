@@ -11,6 +11,7 @@ import com.kurganov.webserver.services.OrderServiceImpl;
 import com.kurganov.webserver.utils.ReceiverApp;
 import com.kurganov.webserver.utils.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -55,6 +56,15 @@ public class OrderController {
     @Autowired
     public void setReceiverApp(ReceiverApp receiverApp) {
         this.receiverApp = receiverApp;
+    }
+
+    @GetMapping("/orders/list")
+    @Secured("ROLE_ADMIN")
+    public String ordersList(Model model) {
+        List<Order> allOrders = orderServiceImpl.getAllOrders();
+        model.addAttribute("allOrders", allOrders);
+        model.addAttribute("fio", authUser.getCurrentFio());
+        return "orders-list";
     }
 
     @GetMapping("/order/fill")

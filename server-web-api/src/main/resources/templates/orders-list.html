@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <title>GeekWinterMarket</title>
+
+    <link rel="icon" type="image/png" th:href="@{/favicon.ico}"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+<body class="bg-light">
+
+<div th:replace="~{navigation :: navi(Home, ${fio})}" />
+
+<div class="d-flex">
+
+    <div class="content p-4">
+
+        <h2 class="mb-4">Работа с заказами</h2>
+
+<!--        <form th:action="@{/users}" method="get">-->
+<!--            <input th:value="${word != null} ? ${word}" th:name="word" type="text" placeholder="Логин">-->
+<!--            <button type="submit" class="btn btn-primary">Найти</button>-->
+<!--        </form>-->
+
+<!--        <div class="col-12 mb-2">-->
+<!--            <a class="btn btn-primary" th:href="@{/users/showRegistrationForm}">Добавить пользователя</a>-->
+<!--        </div>-->
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <table id="example" class="table table-hover" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>ИД</th>
+                        <th>Дата заказа</th>
+                        <th>Сумма заказа</th>
+                        <th>Фамилия</th>
+                        <th>Имя</th>
+                        <th>Адрес доставки</th>
+                        <th>Эл. почта</th>
+                        <th>Телефон</th>
+                        <th>Статус заказа</th>
+                        <th class="actions">Действия</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--                    Место для данных из БД-->
+                    <tr th:each="orderList : ${allOrders}">
+                        <th scope="row" th:text="${orderList.id}"></th>
+                        <th scope="row" th:text="${orderList.createAt}"></th>
+                        <th scope="row" th:text="${orderList.price}"></th>
+                        <th scope="row" th:text="${orderList.user.lastName}"></th>
+                        <th scope="row" th:text="${orderList.user.firstName}"></th>
+                        <th scope="row" th:text="${orderList.deliveryAddress.address}"></th>
+                        <th scope="row" th:text="${orderList.user.email}"></th>
+                        <th scope="row" th:text="${orderList.user.phone}"></th>
+                        <th scope="row" th:text="${orderList.status}"></th>
+<!--                        <th scope="row">-->
+<!--                            <button type="button" class="btn btn-primary">Просмотреть заказ</button>-->
+<!--                            <button type="button" class="btn btn-primary">Удалить заказ</button>-->
+<!--                        </th>-->
+                        <!--                        <th scope="row" th:text="${user.getPassword()}"></th>-->
+                        <td>
+                            <button type="button" class="btn btn-primary">Просмотреть заказ</button>
+                            <button type="button" class="btn btn-danger">Удалить заказ</button>
+                            <!--                            <button name="edit" type="submit">Редактировать</button>-->
+                            <!--                            <button name="delete" type="reset">Удалить</button>-->
+                            <!--<a th:href="@{/users/{id}(id = ${user.getId()})}" class="btn btn-icon btn-pill btn-primary" data-toggle="tooltip" title="Редактировать"><i class="fa fa-fw fa-edit"></i></a>-->
+                            <!--                            <a th:href="@{/users/delete/{id}(id = ${user.getId()})}" class="btn btn-icon btn-pill btn-danger" data-toggle="tooltip" title="Удалить"><i class="fa fa-fw fa-trash"></i></a>-->
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -46,6 +46,10 @@
                     th:classappend="${activeTab == 'Users' ? 'active' : ''}">
                     <a class="nav-link" th:href="@{/users}">Пользователи</a>
                 </li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item"
+                    th:classappend="${activeTab == 'Users' ? 'active' : ''}">
+                    <a class="nav-link" th:href="@{/orders/list}">Заказы</a>
+                </li>
                 <li sec:authorize="isAnonymous()" class="nav-item">
                     <form class="align-middle" th:action="@{/authenticateTheUser}" method="POST">
                         <div class="input-group-prepend">
