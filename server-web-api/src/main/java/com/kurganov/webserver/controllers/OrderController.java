@@ -6,6 +6,7 @@ import com.kurganov.serverdb.entities.User;
 import com.kurganov.webserver.interfaces.UserService;
 import com.kurganov.webserver.security.AuthUser;
 import com.kurganov.webserver.services.DeliveryAddressServiceImpl;
+import com.kurganov.webserver.services.MailServiceImpl;
 import com.kurganov.webserver.services.OrderServiceImpl;
 import com.kurganov.webserver.utils.ReceiverApp;
 import com.kurganov.webserver.utils.ShoppingCart;

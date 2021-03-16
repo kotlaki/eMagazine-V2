@@ -1,6 +1,8 @@
 package com.kurganov.webserver.controllers;
 
+import com.kurganov.serverdb.entities.Order;
 import com.kurganov.webserver.security.AuthUser;
+import com.kurganov.webserver.services.MailServiceImpl;
 import com.kurganov.webserver.utils.ShoppingCart;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
@@ -29,6 +31,9 @@ public class PayPalController {
 
     @Autowired
     private AuthUser authUser;
+
+    @Autowired
+    private MailServiceImpl mailService;
 
     private APIContext apiContext = new APIContext(clientId, clientSecret, mode);
 
@@ -92,6 +97,8 @@ public class PayPalController {
         if (executorPayment.getState().equals("approved")) {
             model.addAttribute("message", "Ваш заказ сформерован");
             model.addAttribute("fio", authUser.getCurrentFio());
+
+            mailService.sendMail("dev.kurganov@gmail.com", "New Order", "Оплачен новый заказ!");
             // удаляем содержимое корзины
             shoppingCart.removeAll(shoppingCart.getItems());
         } else {
