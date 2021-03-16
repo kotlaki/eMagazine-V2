@@ -19,4 +19,6 @@ public interface OrderService {
 
     Order changeOrderStatus(Order order, OrderStatus newStatus);
 
+    List<Order> getOrderByUserId(Long userId);
+
 }

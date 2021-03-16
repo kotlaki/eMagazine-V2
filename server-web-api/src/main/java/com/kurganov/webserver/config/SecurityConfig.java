@@ -50,7 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/shop/delete/**").hasRole("ADMIN")
                 .antMatchers("/**").permitAll()
                 .and()
-                .formLogin();
+                .formLogin()
+                .loginProcessingUrl("/authenticateTheUser");
     }
 
     //    @Override

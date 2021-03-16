@@ -53,4 +53,9 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(newStatus);
         return saveOrder(order);
     }
+
+    @Override
+    public List<Order> getOrderByUserId(Long userId) {
+        return orderRepository.getOrdersByUserId(userId);
+    }
 }

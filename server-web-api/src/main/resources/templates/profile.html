@@ -15,44 +15,107 @@
     <script type="text/javascript" th:src="@{/js/main.js}"></script>
 
     <link type="text/css" rel="stylesheet" th:href="@{/css/main.css}"/>
+
+    <style>
+        /* внешние границы таблицы серого цвета толщиной 1px */
+        table {
+            border: 1px solid grey;
+            width: 100%;
+        }
+
+        /* границы ячеек первого ряда таблицы */
+        th {
+            border: 1px solid grey;
+        }
+
+        /* границы ячеек тела таблицы */
+        td {
+            border: 1px solid grey;
+        }
+    </style>
+
 </head>
 
 <body>
 
+<div th:replace="~{navigation :: navi(Shop, ${fio})}"/>
+
+<h2 style="font-weight: bold; margin-bottom: 20px">Профиль пользователя <span th:text="${userName.userName}"></span>
+</h2>
+
 <div class="container">
     <br>
-    <p th:text="${fio}"></p>
-<!--    <h1 th:text="${order.getUser().getFirstName() + '!'}"></h1>-->
-<!--    <p style="margin-bottom: 40px">Ваш заказ успешно оформлен. В ближайшее время мы приступим к его сборке.</p>-->
-<!--    <table style="border-collapse: collapse;">-->
-<!--        <caption style="font-weight: bold; margin-bottom: 20px">Состав заказа</caption>-->
-<!--        <thead>-->
-<!--        <tr style="background-color: #bee5eb;">-->
-<!--            <th style="padding: 20px; text-align: center;">Название товара</th>-->
-<!--            <th style="padding: 20px; text-align: center;">Количество</th>-->
-<!--            <th style="padding: 20px; text-align: center;">Стоимость</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
+    <p style="font-weight: bold">
+        Логин:
+    </p>
+    <input style="text-align: center" th:value="${userName.userName}" readonly>
 
-<!--        <tbody>-->
-<!--        <tr th:each="orderItem, iterStat : ${order.orderItems}">-->
-<!--            <td style="border-top: 1px solid #dee2e6; padding: 20px; text-align: center;"-->
-<!--                th:styleappend="${iterStat.odd} ? 'background-color: rgba(0,0,0,.075);'"-->
-<!--                th:text="${orderItem.product.title}"/>-->
-<!--            <td style="border-top: 1px solid #dee2e6; padding: 20px; text-align: center;"-->
-<!--                th:styleappend="${iterStat.odd} ? 'background-color: rgba(0,0,0,.075);'"-->
-<!--                th:text="${orderItem.quantity}"/>-->
-<!--            <td style="border-top: 1px solid #dee2e6; padding: 20px; text-align: center;"-->
-<!--                th:styleappend="${iterStat.odd} ? 'background-color: rgba(0,0,0,.075);'"-->
-<!--                th:text="${orderItem.totalPrice}"/>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--        <tfoot>-->
-<!--        <td style="padding: 20px; font-style: italic;">Итоговая сумма:</td>-->
-<!--        <td style="padding: 20px; font-style: italic;"></td>-->
-<!--        <td style="padding: 20px; font-style: italic;" th:utext="'<b>' + ${order.price}+ '</b>'"></td>-->
-<!--        </tfoot>-->
-<!--    </table>-->
+<!--    <form th:object="${userForRePass}" method="post" th:action="@{/profile/savePass}">-->
+<!--        <p style="font-weight: bold">-->
+<!--            Пароль:-->
+<!--        </p>-->
+
+<!--        <input type="password" style="text-align: center" th:value="*{password}">-->
+
+<!--        <br>-->
+<!--        <button type="submit" class="btn btn-primary">Изменить пароль</button>-->
+<!--    </form>-->
+    <br>
+    <p style="font-weight: bold">
+        Фамилия:
+    </p>
+    <input style="text-align: center" th:value="${userName.lastName}" readonly>
+
+    <br>
+    <p style="font-weight: bold">
+        Имя:
+    </p>
+    <input style="text-align: center" th:value="${userName.firstName}" readonly>
+
+    <br>
+    <p style="font-weight: bold">
+        Номер телефона:
+    </p>
+    <input style="text-align: center" th:value="${userName.phone}" readonly>
+
+    <br>
+    <p style="font-weight: bold">
+        Эл. почта:
+    </p>
+    <input style="text-align: center" th:value="${userName.email}" readonly>
+
+    <br>
+    <p style="font-weight: bold">
+        Адреса доставок:
+    </p>
+
+    <table th:each="o : ${deliveryAddress}">
+        <tr th:text="${o.address}"></tr>
+    </table>
+
+    <br>
+    <p style="font-weight: bold">
+        Заказы:
+    </p>
+    <table style="text-align: center">
+        <tr>
+            <th>Номер заказа</th>
+            <th>Дата заказа</th>
+            <th>Адрес доставки</th>
+            <th>Статус заказа</th>
+            <th>Открыть заказ</th>
+        </tr>
+        <tr th:each="o : ${listOrders}">
+            <td th:text="${o.id}"></td>
+            <td th:text="${o.getCreateAt()}"></td>
+            <td th:text="${o.getDeliveryAddress().address}"></td>
+            <td th:text="${o.getStatus()}"></td>
+            <td><a class="btn btn-primary" href="#">Открыть</a></td>
+        </tr>
+    </table>
+    <br>
+    <a class="btn btn-primary">Сохранить</a>
+    <a class="btn btn-danger" th:href="@{/back}">Назад</a>
 
 </div>
 
