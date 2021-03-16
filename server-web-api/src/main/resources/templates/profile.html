@@ -110,11 +110,11 @@
             <td th:text="${o.getCreateAt()}"></td>
             <td th:text="${o.getDeliveryAddress().address}"></td>
             <td th:text="${o.getStatus()}"></td>
-            <td><a class="btn btn-primary" href="#">Открыть</a></td>
+            <td><a class="btn btn-primary" th:href="@{'/profile/myOrder/' + ${o.id}} ">Открыть</a></td>
         </tr>
     </table>
     <br>
-    <a class="btn btn-primary">Сохранить</a>
+<!--    <a class="btn btn-primary">Сохранить</a>-->
     <a class="btn btn-danger" th:href="@{/back}">Назад</a>
 
 </div>
