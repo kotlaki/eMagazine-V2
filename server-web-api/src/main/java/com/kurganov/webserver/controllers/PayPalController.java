@@ -12,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -43,6 +45,7 @@ public class PayPalController {
 
     @RequestMapping("/buy")
     public String buy(HttpServletRequest request, HttpServletResponse response, Model model) throws PayPalRESTException {
+
         Payer payer = new Payer();
         payer.setPaymentMethod("paypal");
         RedirectUrls redirectUrls = new RedirectUrls();
@@ -103,6 +106,7 @@ public class PayPalController {
             model.addAttribute("fio", authUser.getCurrentFio());
 
             mailService.sendMail("dev.kurganov@gmail.com", "New Order", "Оплачен новый заказ!");
+//            mailService.sendOrderMail(orderService.findById(orderId));
             // удаляем содержимое корзины
             shoppingCart.removeAll(shoppingCart.getItems());
         } else {

@@ -34,6 +34,9 @@ public class OrderController {
     private AuthUser authUser;
 
     @Autowired
+    private MailServiceImpl mailService;
+
+    @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
@@ -112,6 +115,7 @@ public class OrderController {
         model.addAttribute("order", order);
         model.addAttribute("fio", authUser.getCurrentFio());
         receiverApp.receiverApp();
+        mailService.sendOrderMail(order);
         return "order-before-purchase";
     }
 
