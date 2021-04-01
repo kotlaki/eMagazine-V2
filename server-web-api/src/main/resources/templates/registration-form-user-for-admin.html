@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Редактирование пользователя</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
+
+    <style>
+        .error {
+            color: red
+        }
+    </style>
+</head>
+
+<html>
+
+<body>
+
+<div th:replace="~{navigation :: navi(AddProduct, ${fio})}"/>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <header class="card-header">
+                    <h4 class="card-title mt-2">Создание пользователя</h4>
+                </header>
+                <article class="card-body">
+                    <form th:action="@{/users/update}" th:object="${newUser}" method="post"
+                          enctype="multipart/form-data">
+                        <input type="hidden" class="form-control">
+
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label>Логин</label>
+                                <input th:field="*{userName}" type="text" class="form-control"
+                                       placeholder="Введите логин">
+
+                                <label>Пароль</label>
+                                <input th:field="*{password}" type="password" class="form-control"
+                                       placeholder="Введите пароль">
+
+                                <label>Подтверждение пароля</label>
+                                <input type="password" class="form-control" placeholder="Введите пароль еще раз">
+
+                                <div class="input-group">
+                                    <div class="form-group col-md-12">
+                                        <label>Выберите роль пользователя</label>
+                                        <select th:field="*{roles}" class="form-control">
+                                            <option th:each="roles: ${roles}"
+                                                    th:value="${roles.id}"
+                                                    th:text="${roles.name}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <label>Фамилия</label>
+                                <input th:field="*{lastName}" type="text" class="form-control"
+                                       placeholder="Введите фамилию">
+
+                                <label>Имя</label>
+                                <input th:field="*{firstName}" type="text" class="form-control" th:rows="3"
+                                       placeholder="Введите имя">
+
+                                <label>Эл. почта</label>
+                                <input th:field="*{email}" type="email" class="form-control" th:rows="5"
+                                       placeholder="Введите электронную почту">
+
+                                <label>Номер телефона</label>
+                                <input th:field="*{phone}" type="tel" class="form-control" th:rows="3"
+                                       placeholder="Введите номер телефона">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" name="addProduct" class="btn btn-primary btn-block">
+                                Сохранить
+                            </button>
+                        </div>
+                    </form>
+                </article>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
