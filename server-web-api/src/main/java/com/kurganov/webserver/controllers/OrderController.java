@@ -5,6 +5,7 @@ import com.kurganov.serverdb.entities.User;
 import com.kurganov.webserver.interfaces.UserService;
 import com.kurganov.webserver.services.DeliveryAddressServiceImpl;
 import com.kurganov.webserver.services.OrderServiceImpl;
+import com.kurganov.webserver.utils.ReceiverApp;
 import com.kurganov.webserver.utils.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ public class OrderController {
     private OrderServiceImpl orderServiceImpl;
     private DeliveryAddressServiceImpl deliverAddressService;
     private ShoppingCart shoppingCart;
+    private ReceiverApp receiverApp;
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -44,6 +46,11 @@ public class OrderController {
         this.shoppingCart = shoppingCart;
     }
 
+    @Autowired
+    public void setReceiverApp(ReceiverApp receiverApp) {
+        this.receiverApp = receiverApp;
+    }
+
     @GetMapping("/order/fill")
     public String orderFill(Model model, Principal principal) {
         if (principal == null) {
@@ -57,7 +64,7 @@ public class OrderController {
 
     @PostMapping("/order/confirm")
     public String orderConfirm(Model model, Principal principal, @RequestParam("phoneNumber") String phoneNumber,
-                               @RequestParam("deliveryAddress") Long deliveryAddressId) {
+                               @RequestParam("deliveryAddress") Long deliveryAddressId) throws Exception {
         if (principal == null) {
             return "redirect:/login";
         }
@@ -69,6 +76,7 @@ public class OrderController {
         order.setDeliveryPrice(0.0);
         order = orderServiceImpl.saveOrder(order);
         model.addAttribute("order", order);
+        receiverApp.receiverApp();
         return "order-before-purchase";
     }
 

@@ -62,14 +62,14 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="product : ${products}">
+        <tr class="table-product" th:each="product : ${products}">
             <td th:text="${product.id}"/>
             <td>
 <!--                <img th:if="${product.images.size() > 0}" width="40" height="40" th:src="@{'/static/images/' + ${product.images[0].path}}" />-->
                 <img th:if="${product.images.size() > 0}" width="150" height="150" th:src="@{'/images/' + ${product.images[0].path}}" />
             </td>
             <td >
-                <a th:text="${product.title}" th:href="@{'/shop/product_info/' + ${product.id}}" />
+                <a class="name-product" th:text="${product.title}" th:href="@{'/shop/product_info/' + ${product.id}}" />
             </td>
 
             <td th:text="${product.price}"/>

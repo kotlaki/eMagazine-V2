@@ -49,8 +49,6 @@ public class ShoppingCart {
             items.add(orderItem);
         }
         orderItem.setQuantity(orderItem.getQuantity() + 1);
-//        recalculate();
-//        totalCost = 0.0;
     }
 
     public void setQuantity(Product product, Long quantity) {
@@ -59,8 +57,6 @@ public class ShoppingCart {
             return;
         }
         orderItem.setQuantity(quantity);
-//        recalculate();
-//        totalCost = 0.0;
     }
 
     public void remove(Product product) {
@@ -69,17 +65,7 @@ public class ShoppingCart {
             return;
         }
         items.remove(orderItem);
-//        recalculate();
-//        totalCost = 0.0;
     }
-
-//    private void recalculate() {
-//        totalCost = 0.0;
-//        for (OrderItem o : items) {
-//            o.setTotalPrice(o.getQuantity() * o.getProduct().getPrice());
-//            totalCost += o.getTotalPrice();
-//        }
-//    }
 
     private OrderItem findOrderFromProduct(Product product) {
         return items.stream().filter(o -> o.getProduct().getId().equals(product.getId())).findFirst().orElse(null);
